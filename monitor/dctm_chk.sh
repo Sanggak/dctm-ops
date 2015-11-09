@@ -63,8 +63,8 @@ if [ `touch $TMPF 2>&-` ]; then
 	rm -f $NASD/$TMPF 2>&-
 	rm -f $LOGD/$TMPF 2>&-
 else 
-	NAS_WRITE=0m0.000s
-	NAS_READ=0m0.000s
+	NAS_WRITE=0
+	NAS_READ=0
 fi
 
 if [ ! -f $LOGD/10M ]; then
