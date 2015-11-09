@@ -58,8 +58,8 @@ TMPF=$NASD/$HOST$$
 if [ `touch $TMPF 2>&-` ]; then
 	TMPF=`basename $TMPF`
 
-	NAS_WRITE=`(time dd if=$LOGD/10M   of=$NASD/$TMPF bs=1024 count=10240 2>&1) 2>&1 | awk '/real/ {print $2}'`
-	NAS_READ=` (time dd if=$NASD/$TMPF of=$LOGD/$TMPF bs=1024 count=10240 2>&1) 2>&1 | awk '/real/ {print $2}'`
+	NAS_WRITE=`(time dd if=$LOGD/10M   of=$NASD/$TMPF bs=1024 count=10240 2>&1) 2>&1 | awk '/real/ {print $2}'|sed -e 's/^/scale=0;1000*(/' -e 's/m/*60+/' -e 's/s$/)\/1/' |bc`
+	NAS_READ=` (time dd if=$NASD/$TMPF of=$LOGD/$TMPF bs=1024 count=10240 2>&1) 2>&1 | awk '/real/ {print $2}'|sed -e 's/^/scale=0;1000*(/' -e 's/m/*60+/' -e 's/s$/)\/1/' |bc`
 	rm -f $NASD/$TMPF 2>&-
 	rm -f $LOGD/$TMPF 2>&-
 else 
